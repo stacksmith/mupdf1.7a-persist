@@ -1,3 +1,10 @@
+STACKSMITH-MODIFICATIONS:
+  Modified version of MuPDF attemps to store a .bmk file alongside the
+original file.  The .bmk file contains 10 ints, each with a page number
+corresponding to a bookmark.  Bookmarks are set with <1-9>m and recalled
+with<1-9>t; setting a mark will attempt to rewrite the bookmark file.
+Read-only directories or lack of write access should be tolerated.
+-------------------------------------------------------------------------------
 ABOUT
 
 MuPDF is a lightweight PDF, XPS, EPUB and CBZ viewer and parser/rendering

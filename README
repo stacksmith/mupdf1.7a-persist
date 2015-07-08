@@ -4,7 +4,46 @@ original file.  The .bmk file contains 10 ints, each with a page number
 corresponding to a bookmark.  Bookmarks are set with <1-9>m and recalled
 with<1-9>t; setting a mark will attempt to rewrite the bookmark file.
 Read-only directories or lack of write access should be tolerated.
+
+Modifications are in platform/x11/pdfapp.c in
+  pdfapp.h - added file handle to the app structure
+  pdfapp_open( - attempt to read bookmark file; if missing write an empty one
+  pdfapp_onkey( - in case of 'm', attempt to write bookmark file
+
+grep for 'stacksmith:' to find the changed areas
 -------------------------------------------------------------------------------
+		L-- rotate left
+		R-- rotate right
+		h-- scroll left
+		j down-- scroll down
+		k up-- scroll up
+		l-- scroll right
+		+-- zoom in
+		--- zoom out
+		W-- zoom to fit window width
+		H-- zoom to fit window height
+		Z-- zoom to fit page
+		w-- shrinkwrap
+		f-- fullscreen
+		r-- reload file
+		. pgdn right spc\t-- next page
+		, pgup left b bkspc\t-- previous page
+		>-- next 10 pages
+		<-- back 10 pages
+		m-- mark page for snap back
+		t-- pop back to latest mark
+		1m-- mark page in register 1
+		1t-- go to page in register 1
+		G-- go to last page
+		123g-- go to page 123
+		/-- search forwards for text
+		?-- search backwards for text
+		n-- find next search result
+		N-- find previous search result
+		c-- toggle between color and grayscale
+		i-- toggle inverted color mode
+		q-- quit
+
 ABOUT
 
 MuPDF is a lightweight PDF, XPS, EPUB and CBZ viewer and parser/rendering

@@ -209,7 +209,7 @@ static void event_cb(fz_context *ctx, pdf_document *doc, pdf_doc_event *event, v
 void pdfapp_open(pdfapp_t *app, char *filename, int reload)
 {
 	pdfapp_open_progressive(app, filename, reload, 0);
-	//vy: Open the corresponding bookmark file and save file point in app.
+	//stacksmith: Open the corresponding bookmark file and save file point in app.
 	char* bookmark_fname = (char*)malloc(strlen(filename)+4);
 	strcpy(bookmark_fname,filename);
 	strcat(bookmark_fname,".bmk");
@@ -1134,7 +1134,7 @@ void pdfapp_onkey(pdfapp_t *app, int c, int modifiers)
 	int oldpage = app->pageno;
 	enum panning panto = PAN_TO_TOP;
 	int loadpage = 1;
-	//	printf("pdfapp keys: %d %d\n",c, modifiers); //vy
+	//	printf("pdfapp keys: %d %d\n",c, modifiers); //stacksmith
 
 	if (app->issearching)
 	{
@@ -1348,7 +1348,7 @@ void pdfapp_onkey(pdfapp_t *app, int c, int modifiers)
 			int idx = atoi(app->number);
 			if (idx >= 0 && idx < nelem(app->marks))
 				app->marks[idx] = app->pageno;
-			//vy: 
+			//stacksmith: 
 			if(app->fbookmark){
 			  fseek(app->fbookmark,0,SEEK_SET);
 			  int i = fwrite(app->marks,sizeof(int),10,app->fbookmark);

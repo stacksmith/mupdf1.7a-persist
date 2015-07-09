@@ -137,8 +137,6 @@ struct pdfapp_s
 #ifdef HAVE_CURL
 	fz_stream *stream;
 #endif
-	//vy
-	FILE* fbookmark;
 
 };
 

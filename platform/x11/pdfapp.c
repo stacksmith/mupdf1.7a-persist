@@ -209,18 +209,17 @@ static void event_cb(fz_context *ctx, pdf_document *doc, pdf_doc_event *event, v
 void pdfapp_open(pdfapp_t *app, char *filename, int reload)
 {
 	pdfapp_open_progressive(app, filename, reload, 0);
-	//stacksmith: Open the corresponding bookmark file and save file point in app.
+	//stacksmith: try to open the corresponding bookmark file
+ 
 	char* bookmark_fname = (char*)malloc(strlen(filename)+4);
 	strcpy(bookmark_fname,filename);
 	strcat(bookmark_fname,".bmk");
-	app->fbookmark = fopen(bookmark_fname,"r+");
-	if(app->fbookmark){
-	  //	  fseek(app->fbookmark,0L,SEEK_SET);	  
-	  int res = fread(app->marks,sizeof(int),10,app->fbookmark);
-	  printf("%x read %d items\n",app->fbookmark,res);
+	FILE* fbm = fopen(bookmark_fname,"r");
+	if(fbm){
+	  int res = fread(app->marks,sizeof(int),10,fbm);
+	  printf("read %d items\n",res);
 	  int i; for(i=0;i<10;i++) printf("%d",app->marks[i]);
-	} else {
-		}
+	}
 	free(bookmark_fname);
 }
 
@@ -520,8 +519,6 @@ void pdfapp_close(pdfapp_t *app)
 #endif
 
 	fz_flush_warnings(app->ctx);
-	if(app->fbookmark)
-	  fclose(app->fbookmark);
 }
 
 static int gen_tmp_file(char *buf, int len)
@@ -1348,12 +1345,16 @@ void pdfapp_onkey(pdfapp_t *app, int c, int modifiers)
 			int idx = atoi(app->number);
 			if (idx >= 0 && idx < nelem(app->marks))
 				app->marks[idx] = app->pageno;
-			//stacksmith: 
-			if(app->fbookmark){
-			  fseek(app->fbookmark,0,SEEK_SET);
-			  int i = fwrite(app->marks,sizeof(int),10,app->fbookmark);
+			//stacksmith: attempt to write the new file
+			char* bookmark_fname = (char*)malloc(strlen(app->docpath)+4);
+			strcpy(bookmark_fname,app->docpath);
+			strcat(bookmark_fname,".bmk");
+			FILE* fbm = fopen(bookmark_fname,"w");
+			free(bookmark_fname);
+			if(fbm){
+			  int i = fwrite(app->marks,sizeof(int),10,fbm);
 			  printf("wrote %d bookmarks\n",i);
-			  fflush(app->fbookmark);
+			  fclose(fbm);
 			}			  
 		}
 		else

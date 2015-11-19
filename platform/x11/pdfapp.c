@@ -219,6 +219,7 @@ void pdfapp_open(pdfapp_t *app, char *filename, int reload)
 	  int res = fread(app->marks,sizeof(int),10,fbm);
 	  printf("read %d items\n",res);
 	  int i; for(i=0;i<10;i++) printf("%d",app->marks[i]);
+	  fclose(fbm);
 	}
 	free(bookmark_fname);
 }

@@ -1,3 +1,7 @@
+OBSOLETE!  MUPDF HAS SUBSEQUENTLY IMPLEMENTED THIS EXACT FUNCTIONALITY:
+
+https://mupdf.com/docs/manual-mupdf-gl.html
+
 STACKSMITH-MODIFICATIONS:
   Modified version of MuPDF attemps to store a .bmk file alongside the
 original file.  The .bmk file contains 10 ints, each with a page number
